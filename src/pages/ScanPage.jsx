@@ -208,13 +208,13 @@ export default function ScanPage() {
       const data = rawResult?.data ? { ...rawResult.data, confidence: rawResult.confidence } : rawResult;
 
       const normalizedData = {
-        name: data.name || "Nataraja",
-        title: data.title || "The Cosmic Dancer",
-        period: data.period || "Chola Period · 11th Century",
-        who: data.who || data.meaning || DEFAULT_NATARAJA.who,
-        meaning: data.meaning || data.who || DEFAULT_NATARAJA.meaning,
-        story: data.story || DEFAULT_NATARAJA.story,
-        kannada_summary: data.kannada_summary || DEFAULT_NATARAJA.kannada_summary,
+        name: data.name || "Sculpture Identified",
+        title: data.title || "Temple Sculpture",
+        period: data.period || "South Indian Heritage",
+        who: data.who || data.meaning || "",
+        meaning: data.meaning || data.who || "",
+        story: data.story || "",
+        kannada_summary: data.kannada_summary || "",
         ...data
       };
 

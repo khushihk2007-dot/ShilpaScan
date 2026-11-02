@@ -4,10 +4,10 @@
  */
 
 const CANDIDATE_MODELS = [
+  'gemini-2.5-flash',
+  'gemini-flash-latest',
   'gemini-flash-lite-latest',
-  'gemini-3.1-flash-lite',
-  'gemini-3.5-flash',
-  'gemini-flash-latest'
+  'gemini-3.1-flash-lite'
 ];
 
 // Fallback high-fidelity dataset for offline demo resilience
@@ -43,20 +43,27 @@ export async function identifySculptureWithGemini(base64DataUrl, mimeType = 'ima
     cleanBase64 = parts[1];
   }
 
-  const prompt = `You are an expert art historian, epigraphist, and iconographer specializing in South Asian and Indian temple sculpture.
-Analyze the provided image of this temple sculpture.
-Identify the deity or figure, dynasty, historical era, iconography, and sacred lore.
+  const prompt = `You are an expert in Indian temple architecture and iconography, especially South Indian (Chola, Hoysala, Chalukya, Vijayanagara) sculptures from Karnataka and Tamil Nadu.
 
-Return ONLY a valid JSON object matching this exact schema:
+When the user uploads an image of a temple sculpture, carefully analyze the posture, attributes (weapons, animals, hand gestures, ornaments), and style.
+
+Return ONLY valid JSON in this exact format:
+
 {
-  "name": "Common deity or figure name (e.g. Nataraja, Ganesha, Durga, Hoysala Madanika, Gommateshwara)",
-  "title": "Poetic title (e.g. The Cosmic Dancer, Lord of Beginnings, Celestial Maiden)",
-  "period": "Dynasty and approximate era (e.g. Chola Period · 11th Century, Hoysala Empire · 12th Century)",
-  "who": "Short explanation of who this figure is (2-3 sentences)",
-  "meaning": "What the sculpture symbolizes and its iconography (2-3 sentences)",
-  "story": "A clear, engaging story behind it (4-6 sentences)",
-  "kannada_summary": "A short summary in Kannada language using Kannada script (2-3 sentences)"
-}`;
+  "name": "Correct name of the deity or character",
+  "title": "Short descriptive title",
+  "period": "Approximate period and style (e.g. Hoysala, 12th century)",
+  "who": "2-3 sentence explanation of who this figure is",
+  "meaning": "What the sculpture symbolizes or represents",
+  "story": "A clear and engaging story or myth related to this sculpture (4-6 sentences)",
+  "kannada_summary": "A short summary in simple Kannada"
+}
+
+Important rules:
+- Do NOT default to Nataraja unless the image clearly shows Nataraja.
+- If you are not sure, say the closest possible identification and mention uncertainty in the "who" field.
+- Focus on accurate iconography (e.g. multiple arms, specific animals, dance poses, etc.).
+- Always respond with pure JSON only. No extra text.`;
 
   const requestBody = {
     contents: [{
@@ -94,11 +101,16 @@ Return ONLY a valid JSON object matching this exact schema:
       }
 
       const json = await response.json();
-      let cleanText = text.trim();
+      const rawText = json.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      let cleanText = rawText.trim();
       if (cleanText.startsWith('```json')) {
         cleanText = cleanText.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
       } else if (cleanText.startsWith('```')) {
         cleanText = cleanText.replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
+      }
+
+      if (!cleanText) {
+        throw new Error('Empty response from model');
       }
 
       const parsedData = JSON.parse(cleanText);
@@ -108,9 +120,9 @@ Return ONLY a valid JSON object matching this exact schema:
 
       return {
         ...parsedData,
-        name: parsedData.name || "Nataraja",
-        title: parsedData.title || "The Cosmic Dancer",
-        period: parsedData.period || "Chola Period · 11th Century",
+        name: parsedData.name || "Sculpture Identified",
+        title: parsedData.title || "Temple Sculpture",
+        period: parsedData.period || "South Indian Temple Tradition",
         who: parsedData.who || "",
         meaning: parsedData.meaning || "",
         story: parsedData.story || "",

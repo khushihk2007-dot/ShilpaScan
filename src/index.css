@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background-color: #FDF8F1;
+  color: #1C1917;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle background noise texture */
+.noise::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  opacity: 0.025;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px;
+  z-index: 9999;
+}
+
+/* Decorative mandala rings */
+.mandala-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(194, 65, 12, 0.08);
+  pointer-events: none;
+}
+
+/* Viewfinder corner brackets */
+.viewfinder-bracket {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-color: rgba(255, 255, 255, 0.95);
+  border-style: solid;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+  transition: all 0.3s ease;
+}
+.bracket-tl { top: 0; left: 0; border-width: 3.5px 0 0 3.5px; border-top-left-radius: 14px; }
+.bracket-tr { top: 0; right: 0; border-width: 3.5px 3.5px 0 0; border-top-right-radius: 14px; }
+.bracket-bl { bottom: 0; left: 0; border-width: 0 0 3.5px 3.5px; border-bottom-left-radius: 14px; }
+.bracket-br { bottom: 0; right: 0; border-width: 0 3.5px 3.5px 0; border-bottom-right-radius: 14px; }
+
+/* Laser scanning beam */
+.scan-beam {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  height: 2.5px;
+  background: linear-gradient(90deg, transparent 0%, #C2410C 20%, #FB923C 50%, #C2410C 80%, transparent 100%);
+  box-shadow: 0 0 14px 2px rgba(234, 88, 12, 0.8);
+  pointer-events: none;
+}
+
+/* Shutter button outer ring */
+.shutter-outer {
+  box-shadow: 0 0 0 3.5px rgba(255, 255, 255, 0.88), 0 8px 30px rgba(0, 0, 0, 0.6);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.shutter-outer:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 4px #C2410C, 0 8px 35px rgba(194, 65, 12, 0.5);
+}
+.shutter-outer:active {
+  transform: scale(0.92);
+}
+
+/* Subtle glowing pulse */
+.animate-pulse-glow {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}

@@ -130,20 +130,11 @@ export default function PassportPage() {
                 <div
                   key={item.id}
                   onClick={() => { setActiveModalItem(item); setModalTab('who'); }}
-                  className="group flex items-center gap-3.5 p-3 rounded-2xl bg-white border border-stone-200/80 shadow-sm hover:shadow-md hover:border-terracotta/40 transition-all cursor-pointer active:scale-[0.98]"
+                  className="group flex items-center justify-between p-3.5 rounded-2xl bg-white border border-stone-200/80 shadow-sm hover:shadow-md hover:border-terracotta/40 transition-all cursor-pointer active:scale-[0.98]"
                 >
-                  <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-sand/40 flex-shrink-0 border border-stone-200">
-                    <img
-                      src={item.image || '/sculpture.jpg'}
-                      alt={item.name}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                      onError={(e) => { e.target.src = '/sculpture.jpg'; }}
-                    />
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5 mb-0.5">
-                      <span className="inline-block px-1.5 py-0.5 rounded bg-terracotta/10 text-terracotta text-[9.5px] font-semibold uppercase tracking-wider truncate">
+                  <div className="flex-1 min-w-0 pr-2">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <span className="inline-block px-2 py-0.5 rounded-md bg-terracotta/10 text-terracotta text-[9.5px] font-semibold uppercase tracking-wider truncate">
                         {item.period || 'Historical Era'}
                       </span>
                     </div>
@@ -153,8 +144,8 @@ export default function PassportPage() {
                     <p className="font-display italic text-xs text-terracotta font-medium truncate mb-1">
                       {item.title || 'Sacred Heritage'}
                     </p>
-                    <div className="flex items-center gap-1 text-[11px] text-stone-500 truncate">
-                      <svg className="w-3 h-3 text-terracotta/80 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <div className="flex items-center gap-1.5 text-[11px] text-stone-500 truncate">
+                      <svg className="w-3.5 h-3.5 text-terracotta/80 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                       </svg>
@@ -162,7 +153,7 @@ export default function PassportPage() {
                     </div>
                   </div>
 
-                  <div className="text-stone-300 group-hover:text-terracotta transition-colors pr-1">
+                  <div className="text-stone-300 group-hover:text-terracotta group-hover:translate-x-0.5 transition-all pl-2 flex-shrink-0">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                     </svg>

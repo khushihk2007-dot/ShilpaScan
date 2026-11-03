@@ -106,6 +106,8 @@ export default function ScanPage() {
   }
 
   function toggleCameraFlip() {
+    setPreviewImage(null);
+    setSculptureData(null);
     setFacingMode(prev => (prev === 'environment' ? 'user' : 'environment'));
   }
 
@@ -283,12 +285,12 @@ export default function ScanPage() {
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${isCameraLive ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none'}`}
           />
 
-          {/* Captured / Uploaded photo preview (only shown AFTER user takes or uploads a photo) */}
+          {/* Ambient blurred backdrop of the scanned sculpture */}
           {previewImage && (
             <img
               src={previewImage}
-              alt="Scanned Sculpture"
-              className="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.92] contrast-[1.05] z-10"
+              alt="Scanned Sculpture Ambient Backdrop"
+              className="absolute inset-0 w-full h-full object-cover object-center filter blur-2xl opacity-35 scale-110 brightness-50 z-0 pointer-events-none transition-opacity duration-300"
             />
           )}
 
@@ -368,27 +370,55 @@ export default function ScanPage() {
             <div className="w-full flex flex-col items-center justify-center pointer-events-none">
               {/* Status Badge */}
               <div className="mb-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/55 backdrop-blur-md border border-white/15 text-[10.5px] font-medium tracking-wider uppercase text-white/90 shadow-md">
-                <span className={`w-2 h-2 rounded-full ${isAnalyzing ? 'bg-amber-400 animate-ping' : 'bg-emerald-400 animate-pulse'}`} />
-                <span>{isAnalyzing ? 'Analyzing with Gemini…' : 'Camera Active · Ready to Scan'}</span>
+                <span className={`w-2 h-2 rounded-full ${isAnalyzing ? 'bg-amber-400 animate-ping' : previewImage ? 'bg-emerald-400' : 'bg-emerald-400 animate-pulse'}`} />
+                <span>
+                  {isAnalyzing
+                    ? 'Analyzing with Gemini…'
+                    : previewImage
+                    ? 'Sculpture Scanned'
+                    : 'Camera Active · Ready to Scan'}
+                </span>
               </div>
 
-              {/* Viewfinder Target Reticle */}
-              <div className="relative w-[210px] h-[210px] sm:w-[230px] sm:h-[230px] flex items-center justify-center my-1">
-                <div className="viewfinder-bracket bracket-tl" />
-                <div className="viewfinder-bracket bracket-tr" />
-                <div className="viewfinder-bracket bracket-bl" />
-                <div className="viewfinder-bracket bracket-br" />
+              {/* Viewfinder Target Reticle / Scanning Frame */}
+              <div className="relative w-[210px] h-[210px] sm:w-[230px] sm:h-[230px] flex items-center justify-center my-1 shadow-2xl">
+                {/* Captured or Gallery-selected Sculpture Image inside Scan Frame */}
+                {previewImage && (
+                  <div className="absolute inset-0 rounded-[14px] overflow-hidden bg-black/50 z-0">
+                    <img
+                      src={previewImage}
+                      alt="Scanned Sculpture"
+                      className="w-full h-full object-cover object-center filter brightness-[0.95] contrast-[1.05]"
+                    />
+                  </div>
+                )}
 
-                <div className="w-6 h-6 rounded-full border border-white/30 flex items-center justify-center opacity-60">
-                  <div className="w-1.5 h-1.5 rounded-full bg-terracotta animate-ping" />
-                </div>
+                {/* White Corner Brackets (Scan Frame) */}
+                <div className="viewfinder-bracket bracket-tl z-20" />
+                <div className="viewfinder-bracket bracket-tr z-20" />
+                <div className="viewfinder-bracket bracket-bl z-20" />
+                <div className="viewfinder-bracket bracket-br z-20" />
 
-                <div className="scan-beam animate-scan-laser" />
+                {/* Reticle Target Center Pip (only when camera is live & no image selected) */}
+                {!previewImage && (
+                  <div className="w-6 h-6 rounded-full border border-white/30 flex items-center justify-center opacity-60 z-10">
+                    <div className="w-1.5 h-1.5 rounded-full bg-terracotta animate-ping" />
+                  </div>
+                )}
+
+                {/* Laser Scanning Beam (during analysis) */}
+                {isAnalyzing && (
+                  <div className="scan-beam animate-scan-laser z-20" />
+                )}
               </div>
 
               {/* Hint badge */}
               <p className="mt-2 text-[11px] font-medium text-white/85 bg-black/55 backdrop-blur-sm px-4 py-1.5 rounded-full border border-white/10 shadow-sm">
-                {isAnalyzing ? 'Identifying temple sculpture iconography…' : 'Align sculpture in frame & tap shutter'}
+                {isAnalyzing
+                  ? 'Identifying temple sculpture iconography…'
+                  : previewImage
+                  ? 'Sculpture aligned in frame'
+                  : 'Align sculpture in frame & tap shutter'}
               </p>
             </div>
           ) : (

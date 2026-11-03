@@ -67,40 +67,38 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Buttons */}
-          <div className="flex flex-col items-center gap-3 w-full max-w-xs mb-3">
-            {/* Scan Sculpture Primary Button - Prominent & Polished */}
+          {/* 3 Equal-Sized, Highly Visible Action Buttons */}
+          <div className="flex flex-col items-center gap-2.5 w-full max-w-xs mb-2">
+            {/* 1. Scan Sculpture */}
             <Link
               to="/scan"
               id="btn-scan-sculpture"
-              className="animate-pulse-glow group flex items-center justify-center gap-3 w-full py-4.5 px-6 rounded-2xl bg-gradient-to-r from-[#D9532F] via-terracotta to-terracotta-dark text-white font-bold text-lg shadow-xl shadow-terracotta/30 border border-white/20 transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl active:scale-[0.98]"
+              className="animate-pulse-glow group flex items-center justify-center gap-2.5 w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-[#D9532F] via-terracotta to-terracotta-dark text-white font-bold text-sm sm:text-base shadow-lg shadow-terracotta/25 border border-white/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]"
             >
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:rotate-12 transition-transform duration-300 flex-shrink-0">
-                <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
-                </svg>
-              </div>
+              <svg className="w-5 h-5 text-white transition-transform duration-300 group-hover:rotate-12 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+              </svg>
               <span>Scan Sculpture</span>
             </Link>
 
-            {/* Try Demo Sculptures Secondary Button */}
+            {/* 2. Try Demo Sculptures */}
             <Link
               to="/demo"
               id="btn-try-demo-sculptures"
-              className="group flex items-center justify-center gap-2.5 w-full py-3.5 px-4 rounded-2xl border-2 border-terracotta/30 bg-white/90 backdrop-blur text-terracotta-dark font-semibold text-sm shadow-sm transition-all duration-300 hover:border-terracotta hover:bg-white hover:shadow-md hover:scale-[1.01] active:scale-[0.98]"
+              className="group flex items-center justify-center gap-2.5 w-full py-3.5 px-4 rounded-2xl border-2 border-terracotta/40 bg-white/95 text-stone-900 font-bold text-sm sm:text-base shadow-sm transition-all duration-300 hover:border-terracotta hover:bg-white hover:shadow-md hover:scale-[1.01] active:scale-[0.98]"
             >
-              <span className="text-base">⚡</span>
+              <span className="text-base flex-shrink-0">⚡</span>
               <span>Try Demo Sculptures</span>
             </Link>
 
-            {/* My Heritage Passport Tertiary Button */}
+            {/* 3. My Heritage Passport */}
             <Link
               to="/passport"
               id="btn-heritage-passport"
-              className="group flex items-center justify-center gap-2 w-full py-2.5 text-stone-600 hover:text-terracotta font-medium text-xs transition-colors"
+              className="group flex items-center justify-center gap-2.5 w-full py-3.5 px-4 rounded-2xl border-2 border-stone-300/80 bg-white/95 text-stone-800 font-bold text-sm sm:text-base shadow-sm transition-all duration-300 hover:border-terracotta hover:text-terracotta hover:bg-white hover:shadow-md hover:scale-[1.01] active:scale-[0.98]"
             >
-              <svg className="w-4 h-4 text-terracotta/80 transition-transform duration-300 group-hover:-rotate-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+              <svg className="w-5 h-5 text-terracotta/90 transition-transform duration-300 group-hover:-rotate-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
               </svg>
               <span>My Heritage Passport</span>

@@ -68,7 +68,7 @@ export default function HomePage() {
           </div>
 
           {/* Buttons */}
-          <div className="flex flex-col items-center gap-3.5 w-full max-w-xs mb-3">
+          <div className="flex flex-col items-center gap-3 w-full max-w-xs mb-3">
             {/* Scan Sculpture Primary Button - Prominent & Polished */}
             <Link
               to="/scan"
@@ -84,16 +84,26 @@ export default function HomePage() {
               <span>Scan Sculpture</span>
             </Link>
 
-            {/* My Heritage Passport Secondary Button */}
+            {/* Try Demo Sculptures Secondary Button */}
+            <Link
+              to="/demo"
+              id="btn-try-demo-sculptures"
+              className="group flex items-center justify-center gap-2.5 w-full py-3.5 px-4 rounded-2xl border-2 border-terracotta/30 bg-white/90 backdrop-blur text-terracotta-dark font-semibold text-sm shadow-sm transition-all duration-300 hover:border-terracotta hover:bg-white hover:shadow-md hover:scale-[1.01] active:scale-[0.98]"
+            >
+              <span className="text-base">⚡</span>
+              <span>Try Demo Sculptures</span>
+            </Link>
+
+            {/* My Heritage Passport Tertiary Button */}
             <Link
               to="/passport"
               id="btn-heritage-passport"
-              className="group flex items-center justify-center gap-2.5 w-full py-3.5 rounded-2xl border-2 border-terracotta/25 bg-white/80 backdrop-blur text-terracotta-dark font-semibold text-sm shadow-sm transition-all duration-300 hover:border-terracotta/50 hover:bg-white hover:shadow-md hover:scale-[1.01] active:scale-[0.98]"
+              className="group flex items-center justify-center gap-2 w-full py-2.5 text-stone-600 hover:text-terracotta font-medium text-xs transition-colors"
             >
-              <svg className="w-5 h-5 transition-transform duration-300 group-hover:-rotate-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+              <svg className="w-4 h-4 text-terracotta/80 transition-transform duration-300 group-hover:-rotate-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
               </svg>
-              My Heritage Passport
+              <span>My Heritage Passport</span>
             </Link>
           </div>
 

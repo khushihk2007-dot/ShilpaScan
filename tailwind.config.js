@@ -40,7 +40,7 @@ export default {
           '50%': { boxShadow: '0 0 0 14px rgba(194,65,12,0)' },
         },
         'card-rise': {
-          '0%': { transform: 'translateY(30px)', opacity: '0' },
+          '0%': { transform: 'translateY(40px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         }
       },
@@ -50,7 +50,7 @@ export default {
         'float': 'float 4s ease-in-out infinite',
         'spin-slow': 'spin-slow 60s linear infinite',
         'pulse-glow': 'pulse-glow 2.5s ease-in-out infinite',
-        'card-rise': 'card-rise 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'card-rise': 'card-rise 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards',
       }
     },
   },

@@ -421,22 +421,24 @@ export default function ScanPage() {
           
           {/* LOADING STATE */}
           {isAnalyzing && (
-            <div className="w-full bg-[#FDF8F1]/95 backdrop-blur-xl rounded-[24px] p-4 shadow-2xl border border-terracotta/30 text-stone-900 animate-card-rise pointer-events-auto">
+            <div className="w-full bg-[#FDF8F1]/95 backdrop-blur-xl rounded-[24px] p-4 sm:p-5 shadow-2xl border border-amber-200/60 text-stone-900 animate-card-rise pointer-events-auto">
               <div className="flex items-center gap-3.5">
-                <div className="relative w-10 h-10 flex items-center justify-center flex-shrink-0">
-                  <div className="absolute inset-0 rounded-full border-2 border-terracotta/20 animate-ping" />
-                  <div className="w-9 h-9 rounded-full bg-terracotta/10 border border-terracotta/30 flex items-center justify-center text-terracotta">
-                    <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                {/* Temple / Sculpture Icon with subtle pulsing animation */}
+                <div className="relative w-12 h-12 flex items-center justify-center flex-shrink-0">
+                  <div className="absolute inset-0 rounded-2xl bg-terracotta/15 animate-ping opacity-60" />
+                  <div className="relative w-11 h-11 rounded-2xl bg-gradient-to-br from-[#FFF8EE] to-sand/60 border border-terracotta/30 flex items-center justify-center text-terracotta shadow-md animate-pulse">
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2L15 6H18V8H6V6H9L12 2ZM4 10H20V12H4V10ZM6 14H8V20H6V14ZM11 14H13V20H11V14ZM16 14H18V20H16V14ZM3 22H21V20H3V22Z" />
                     </svg>
                   </div>
                 </div>
-                <div>
-                  <h3 className="font-display font-bold text-base text-stone-900 flex items-center gap-2">
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-display font-bold text-base text-stone-900 leading-snug">
                     Identifying sculpture…
                   </h3>
-                  <p className="text-stone-500 text-[11px] leading-tight">Analyzing temple iconography &amp; epigraphy with Google Gemini Vision</p>
+                  <p className="text-stone-500 text-xs leading-tight mt-0.5">
+                    Analyzing temple iconography, posture &amp; sacred style
+                  </p>
                 </div>
               </div>
             </div>
@@ -444,15 +446,16 @@ export default function ScanPage() {
 
           {/* RESULT CARD (Appears only AFTER scanning) */}
           {sculptureData && !isAnalyzing && (
-            <section className="w-full bg-[#FDF8F1]/95 backdrop-blur-xl rounded-[24px] p-3.5 sm:p-4 shadow-[0_12px_40px_rgba(0,0,0,0.55)] border border-amber-200/40 text-stone-900 animate-card-rise pointer-events-auto">
+            <section className="w-full bg-[#FDF8F1]/95 backdrop-blur-xl rounded-[24px] p-3.5 sm:p-4 shadow-[0_16px_45px_rgba(0,0,0,0.55)] border border-amber-200/50 text-stone-900 animate-card-rise pointer-events-auto">
               {/* Header: Period, Name, Title, and Save */}
               <div className="flex items-start justify-between gap-2.5 mb-2.5">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="inline-block px-2.5 py-0.5 rounded-full bg-terracotta/10 text-terracotta text-[10px] font-semibold tracking-wide uppercase border border-terracotta/20">
-                      {sculptureData.period || 'Chola Period'}
+                    <span className="inline-block px-2.5 py-0.5 rounded-full bg-terracotta/10 text-terracotta text-[10px] font-semibold tracking-wide uppercase border border-terracotta/20 truncate">
+                      {sculptureData.period || 'Historical Era'}
                     </span>
-                    <span className="text-[10px] text-stone-400 font-mono">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-stone-100 border border-stone-200/80 text-[10px] font-medium text-stone-600 font-mono">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                       {confidence}% match
                     </span>
                   </div>
@@ -469,21 +472,25 @@ export default function ScanPage() {
                   id="btn-save-passport"
                   onClick={handleSaveToPassport}
                   disabled={isSaved}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold shadow-sm transition-all flex-shrink-0 ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold shadow-sm transition-all duration-200 flex-shrink-0 ${
                     isSaved
-                      ? 'bg-emerald-600 text-white cursor-default'
+                      ? 'bg-emerald-600 text-white cursor-default shadow-emerald-700/20'
                       : 'bg-terracotta hover:bg-terracotta-dark active:scale-95 text-white shadow-terracotta/25'
                   }`}
                 >
-                  <svg className="w-3.5 h-3.5" fill={isSaved ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={isSaved ? "2.5" : "2"}>
+                    {isSaved ? (
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    ) : (
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                    )}
                   </svg>
-                  <span>{isSaved ? 'Saved' : 'Save'}</span>
+                  <span>{isSaved ? 'Saved ✓' : 'Save'}</span>
                 </button>
               </div>
 
               {/* Tabs: Who | Meaning | The Story | ಕನ್ನಡ */}
-              <div className="flex p-0.5 rounded-xl bg-stone-200/70 mb-2.5 gap-0.5">
+              <div className="flex p-1 rounded-xl bg-stone-200/60 mb-2.5 gap-1 border border-stone-200/50">
                 {[
                   { id: 'who', label: 'Who' },
                   { id: 'meaning', label: 'Meaning' },
@@ -493,10 +500,10 @@ export default function ScanPage() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex-1 py-1 rounded-lg text-xs font-semibold transition-all ${
+                    className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 ${
                       activeTab === tab.id
-                        ? 'bg-white text-terracotta-dark shadow-sm'
-                        : 'text-stone-600 hover:text-stone-900'
+                        ? 'bg-terracotta text-white shadow-md shadow-terracotta/25'
+                        : 'text-stone-500 hover:text-stone-800'
                     }`}
                   >
                     {tab.label}

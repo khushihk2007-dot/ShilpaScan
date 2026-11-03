@@ -30,8 +30,9 @@ export default function DemoPage() {
       meaning: sculpture.meaning,
       story: sculpture.story,
       kannada_summary: sculpture.kannada_summary,
-      confidence: sculpture.confidence
-    });
+      confidence: sculpture.confidence,
+      image: sculpture.image
+    }, sculpture.image);
     setSavedStatusMap(prev => ({ ...prev, [sculpture.name]: true }));
   }
 
@@ -98,32 +99,42 @@ export default function DemoPage() {
                 <span>Choose Another Sculpture</span>
               </button>
 
-              <span className="text-[10.5px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+              <span className="text-[10.5px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
                 Instant Result
               </span>
             </div>
           )}
 
-          {/* LIST OF 4 DEMO SCULPTURES */}
+          {/* LIST OF 4 DEMO SCULPTURES WITH IMAGES */}
           {!selectedSculpture && (
             <div className="space-y-3 flex-1 animate-fade-in-up">
               {DEMO_SCULPTURES.map((sculpture, index) => (
                 <div
                   key={sculpture.id}
                   onClick={() => handleSelectSculpture(sculpture)}
-                  className="group flex items-center justify-between p-3.5 rounded-2xl bg-white border border-stone-200/80 shadow-sm hover:shadow-md hover:border-terracotta/40 transition-all cursor-pointer active:scale-[0.98]"
+                  className="group flex items-center gap-3.5 p-3 rounded-2xl bg-white border border-stone-200/80 shadow-sm hover:shadow-md hover:border-terracotta/40 transition-all cursor-pointer active:scale-[0.98]"
                   style={{ animationDelay: `${index * 80}ms` }}
                 >
-                  <div className="flex-1 min-w-0 pr-2">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="inline-block px-2 py-0.5 rounded-md bg-terracotta/10 text-terracotta text-[9.5px] font-semibold uppercase tracking-wider truncate">
+                  {/* Sculpture Thumbnail Image */}
+                  <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-sand/30 border border-stone-200/80 shadow-sm flex-shrink-0">
+                    <img
+                      src={sculpture.image}
+                      alt={sculpture.name}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                      onError={(e) => { e.target.src = '/sculpture.jpg'; }}
+                    />
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <span className="inline-block px-1.5 py-0.5 rounded bg-terracotta/10 text-terracotta text-[9.5px] font-semibold uppercase tracking-wider truncate">
                         {sculpture.period}
                       </span>
                     </div>
                     <h3 className="font-display font-bold text-base text-stone-900 leading-snug truncate group-hover:text-terracotta transition-colors">
                       {sculpture.name}
                     </h3>
-                    <p className="font-display italic text-xs text-stone-600 font-medium truncate mb-1.5">
+                    <p className="font-display italic text-xs text-terracotta font-medium truncate mb-1">
                       {sculpture.title}
                     </p>
                     <div className="flex items-center gap-1.5 text-[11px] text-stone-500 truncate">
@@ -135,15 +146,10 @@ export default function DemoPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 pl-2 flex-shrink-0">
-                    <span className="text-[11px] font-semibold text-terracotta bg-terracotta/[0.08] px-2.5 py-1 rounded-xl opacity-90 group-hover:bg-terracotta group-hover:text-white transition-all">
-                      View
-                    </span>
-                    <div className="text-stone-300 group-hover:text-terracotta group-hover:translate-x-0.5 transition-all">
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                      </svg>
-                    </div>
+                  <div className="text-stone-300 group-hover:text-terracotta group-hover:translate-x-0.5 transition-all pr-1 flex-shrink-0">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
                   </div>
                 </div>
               ))}
@@ -164,28 +170,47 @@ export default function DemoPage() {
             </div>
           )}
 
-          {/* INSTANT FULL RESULT CARD (Identical to Live Scan Result) */}
+          {/* INSTANT FULL RESULT CARD WITH IMAGE BANNER */}
           {selectedSculpture && (
             <div className="flex-1 flex flex-col justify-between animate-card-rise">
               <section className="w-full bg-[#FDF8F1] rounded-[24px] p-4 shadow-xl border border-amber-200/60 text-stone-900">
-                {/* Header: Period, Name, Title, and Save */}
-                <div className="flex items-start justify-between gap-2.5 mb-3">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="inline-block px-2.5 py-0.5 rounded-full bg-terracotta/10 text-terracotta text-[10px] font-semibold tracking-wide uppercase border border-terracotta/20 truncate">
-                        {selectedSculpture.period}
+                {/* Sculpture Photo Banner */}
+                <div className="relative w-full h-40 sm:h-44 rounded-2xl overflow-hidden mb-3 border border-stone-200/80 shadow-md">
+                  <img
+                    src={selectedSculpture.image}
+                    alt={selectedSculpture.name}
+                    className="w-full h-full object-cover object-center"
+                    onError={(e) => { e.target.src = '/sculpture.jpg'; }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+                  <div className="absolute bottom-2.5 left-3.5 right-3.5 flex items-end justify-between text-white">
+                    <div className="flex-1 min-w-0 pr-2">
+                      <span className="inline-block px-2 py-0.5 rounded bg-white/20 backdrop-blur-md text-amber-200 text-[9.5px] font-semibold uppercase tracking-wider mb-1">
+                        {selectedSculpture.badge || selectedSculpture.period}
                       </span>
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-stone-100 border border-stone-200/80 text-[10px] font-medium text-stone-600 font-mono">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                        {selectedSculpture.confidence}% match
-                      </span>
+                      <h3 className="font-display font-bold text-xl sm:text-2xl leading-none truncate">
+                        {selectedSculpture.name}
+                      </h3>
+                      <p className="font-display italic text-amber-100/90 text-xs mt-0.5 truncate">
+                        {selectedSculpture.title}
+                      </p>
                     </div>
-                    <h2 className="font-display text-2xl font-bold text-stone-900 tracking-tight leading-none truncate">
-                      {selectedSculpture.name}
-                    </h2>
-                    <p className="text-terracotta-dark font-medium text-xs italic tracking-wide mt-1 truncate">
-                      {selectedSculpture.title}
-                    </p>
+
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-md text-[10px] font-semibold text-emerald-300 font-mono border border-emerald-400/30 flex-shrink-0">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      {selectedSculpture.confidence}%
+                    </span>
+                  </div>
+                </div>
+
+                {/* Sub-header: Location & Save Button */}
+                <div className="flex items-center justify-between gap-2.5 mb-3">
+                  <div className="flex items-center gap-1.5 text-xs text-stone-600 truncate">
+                    <svg className="w-3.5 h-3.5 text-terracotta flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                    </svg>
+                    <span className="truncate">{selectedSculpture.location}</span>
                   </div>
 
                   {/* Save to Passport Button */}

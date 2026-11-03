@@ -129,11 +129,27 @@ export default function ScanPage() {
       triggerFlash();
       const canvas = canvasRef.current;
       const video = videoRef.current;
-      canvas.width = Math.min(video.videoWidth, 1280);
-      canvas.height = Math.min(video.videoHeight, 1280);
+      const MAX_DIM = 768;
+      let width = video.videoWidth || 640;
+      let height = video.videoHeight || 480;
+
+      if (width > height) {
+        if (width > MAX_DIM) {
+          height = Math.round((height * MAX_DIM) / width);
+          width = MAX_DIM;
+        }
+      } else {
+        if (height > MAX_DIM) {
+          width = Math.round((width * MAX_DIM) / height);
+          height = MAX_DIM;
+        }
+      }
+
+      canvas.width = width;
+      canvas.height = height;
       const ctx = canvas.getContext('2d');
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      ctx.drawImage(video, 0, 0, width, height);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
 
       setPreviewImage(dataUrl);
       setIsCameraLive(false);
@@ -159,7 +175,7 @@ export default function ScanPage() {
     reader.onload = (event) => {
       const img = new Image();
       img.onload = () => {
-        const MAX_DIM = 1280;
+        const MAX_DIM = 768;
         let width = img.width;
         let height = img.height;
 
@@ -180,7 +196,7 @@ export default function ScanPage() {
         canvas.height = height;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, width, height);
-        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
 
         stopCamera();
         setPreviewImage(compressedDataUrl);
